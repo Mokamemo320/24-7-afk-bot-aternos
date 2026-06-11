@@ -6,7 +6,7 @@
     "type": "offline"
   },
   "server": {
-    "ip": "memomoka.aternos.me",
+    "ip": "memomoka.aternos.me:48147",
     "port": 48147,
     "version": "1.20.1",
     "try-creative": false
