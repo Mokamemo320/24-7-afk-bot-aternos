@@ -6,16 +6,16 @@
     "type": "offline"
   },
   "server": {
-    "ip": "memomoka.aternos.me:48147",
+    "ip": "memomoka.aternos.me",
     "port": 48147,
     "version": "1.20.1",
     "try-creative": false
   },
   "position": {
     "enabled": true,
-    "x": 48.539,
-    "y": 71,
-    "z": -46.209
+    "x": 0,
+    "y": 100,
+    "z": 0
   },
   "utils": {
     "auto-auth": {
