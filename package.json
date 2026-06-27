@@ -1,18 +1,23 @@
 {
   "name": "minecraft-afk-bot",
-  "version": "2.2",
-  "description": "Robust AFK bot for Minecraft servers with infinite uptime.",
+  "version": "4.0.0",
+  "description": "Immortal AFK bot with account rotation",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "node --check index.js"
+    "dev": "nodemon index.js",
+    "pm2": "pm2 start index.js --name afk-bot",
+    "stop": "pm2 stop afk-bot",
+    "logs": "pm2 logs afk-bot"
   },
-  "author": "Lamgerr",
-  "license": "MIT",
   "dependencies": {
-    "express": "^4.18.1",
-    "minecraft-data": "^3.103.0",
-    "mineflayer": "^4.34.0",
-    "mineflayer-pathfinder": "^2.1.1"
+    "express": "^4.18.2",
+    "mineflayer": "^4.15.0",
+    "mineflayer-pathfinder": "^2.4.0",
+    "minecraft-data": "^3.52.0",
+    "vec3": "^0.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
