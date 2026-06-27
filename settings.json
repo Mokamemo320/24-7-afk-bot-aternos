@@ -1,87 +1,88 @@
 {
   "name": "AFK Bot",
-  "bot-account": {
-    "username": "MokaMeMoAfkBot",
-    "password": "",
-    "type": "offline"
-  },
   "server": {
     "ip": "memomoka.aternos.me",
     "port": 48147,
-    "version": "1.20.1",
-    "try-creative": false
+    "version": "1.20.4",
+    "try-creative": true
   },
-  "position": {
+  "bot-account": {
+    "username": "Steve123",
+    "password": "",
+    "type": "offline"
+  },
+  "accounts": [
+    {"username": "Steve123", "password": "", "type": "offline"},
+    {"username": "Alex456", "password": "", "type": "offline"},
+    {"username": "Miner789", "password": "", "type": "offline"},
+    {"username": "Builder001", "password": "", "type": "offline"},
+    {"username": "Crafty002", "password": "", "type": "offline"}
+  ],
+  "accountRotation": {
     "enabled": true,
-    "x": 0,
-    "y": 100,
-    "z": 0
+    "interval": 28800000,
+    "onBan": true,
+    "onKick": false
+  },
+  "sessionRotation": {
+    "enabled": true,
+    "interval": 43200000
   },
   "utils": {
     "auto-auth": {
       "enabled": true,
-      "password": "SoloPlayz"
-    },
-    "anti-afk": {
-      "enabled": true,
-      "sneak": true
+      "password": "yourpassword"
     },
     "chat-messages": {
       "enabled": true,
+      "messages": ["Hello!", "How's everyone?", "Building stuff", "Mining ores"],
       "repeat": true,
-      "repeat-delay": 120,
-      "messages": [
-        "Moka Memo is the goat",
-        "Welcome to the server",
-        "Fefo and Nnsh are noob"
-      ]
+      "repeat-delay": 60
     },
-    "chat-log": true,
+    "anti-afk": {
+      "enabled": true,
+      "sneak": false
+    },
     "auto-reconnect": true,
-    "auto-reconnect-delay": 2000,
-    "max-reconnect-delay": 120000
+    "auto-reconnect-delay": 3000,
+    "max-reconnect-delay": 30000
   },
   "movement": {
     "enabled": true,
     "circle-walk": {
-      "enabled": true,
-      "radius": 4,
-      "speed": 3000
+      "enabled": false,
+      "radius": 5,
+      "speed": 5000
+    },
+    "random-jump": {
+      "enabled": false,
+      "interval": 30000
     },
     "look-around": {
       "enabled": true,
-      "interval": 5000
-    },
-    "random-jump": {
-      "enabled": true,
-      "interval": 10000
+      "interval": 15000
     }
   },
   "modules": {
-    "avoidMobs": true,
-    "combat": true,
+    "avoidMobs": false,
+    "combat": false,
     "beds": false,
-    "chat": true,
-    "console-commands": true
+    "chat": true
   },
   "combat": {
-    "attack-mobs": true,
-    "auto-eat": true
+    "attack-mobs": false,
+    "auto-eat": false
   },
   "beds": {
-    "pick-up-day": false,
     "place-night": false
   },
   "discord": {
     "enabled": false,
-    "webhookUrl": "",
+    "webhookUrl": "YOUR_DISCORD_WEBHOOK",
     "events": {
-      "connect": true,
-      "disconnect": true,
+      "connect": false,
+      "disconnect": false,
       "chat": false
     }
-  },
-  "chat": {
-    "respond": true
   }
 }
