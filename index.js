@@ -2,8 +2,9 @@
 
 const { addLog, getLogs } = require("./logger");
 const mineflayer = require("mineflayer");
-const { Movements, pathfinder, goals } = require("mineflayer-pathfinder");
-const { GoalBlock } = goals;
+// mineflayer-pathfinder disabled: incompatible vec3 version causes [FATAL] pos.floored crash
+// const { Movements, pathfinder, goals } = require("mineflayer-pathfinder");
+// const { GoalBlock } = goals;
 const config = require("./settings.json");
 const express = require("express");
 const http = require("http");
@@ -686,21 +687,23 @@ class MovementSimulator {
         }
         if (target) {
             try {
-                this.bot.pathfinder.setMovements(this.defaultMove);
-                this.bot.pathfinder.setGoal(new GoalBlock(
-                    Math.floor(target.x),
-                    Math.floor(target.y),
-                    Math.floor(target.z)
-                ));
+                // Direct movement: face the target and walk forward instead of using pathfinder
+                const pos = this.bot.entity.position;
+                const dx = target.x - pos.x;
+                const dz = target.z - pos.z;
+                const yaw = Math.atan2(-dx, -dz);
+                const pitch = 0;
+                this.bot.look(yaw, pitch, false);
+                this.bot.setControlState('forward', true);
+                // Stop walking after a randomised duration proportional to distance
+                const dist = Math.sqrt(dx * dx + dz * dz);
+                const walkMs = Math.min(Math.max(dist * 200, 1000), 6000);
+                setTimeout(() => {
+                    try { if (this.bot && this.bot.entity) this.bot.setControlState('forward', false); } catch(e) {}
+                }, walkMs);
                 this.lastMoveTime = now;
                 return target;
             } catch (e) {
-                if (this.pathErrors < 3) {
-                    this.pathErrors++;
-                    setTimeout(() => {
-                        try { this.bot.pathfinder.setGoal(null); } catch(e) {}
-                    }, 1000 + Math.random() * 2000);
-                } else { this.pathErrors = 0; }
                 return null;
             }
         }
@@ -1266,7 +1269,8 @@ function createBot() {
             hideErrors: false,
             checkTimeoutInterval: 600000,
         });
-        bot.loadPlugin(pathfinder);
+        // pathfinder plugin disabled: causes [FATAL] pos.floored crash with current vec3 version
+        // bot.loadPlugin(pathfinder);
         
         clearBotTimeouts();
         connectionTimeoutId = setTimeout(() => {
@@ -1290,13 +1294,9 @@ function createBot() {
             addLog(`[Bot] Spawned successfully! (${bot.version})`);
             
             const mcData = require("minecraft-data")(bot.version);
-            const defaultMove = new Movements(bot, mcData);
-            defaultMove.allowFreeMotion = false;
-            defaultMove.canDig = false;
-            defaultMove.liquidCost = 1000;
-            defaultMove.fallDamageCost = 1000;
+            // Movements/defaultMove removed: pathfinder disabled due to vec3 incompatibility
             
-            initializeModules(bot, mcData, defaultMove);
+            initializeModules(bot, mcData, null);
             
             setTimeout(() => {
                 if (bot && botState.connected && config.server["try-creative"]) {
